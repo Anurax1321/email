@@ -16,23 +16,23 @@ def create_email(subject, body, to_email, from_email, attachment_paths, template
     # Attach the body text
     msg.attach(MIMEText(body, 'plain'))
 
-    # Attach files
-    for file_path in attachment_paths:
-        attachment = open(file_path, "rb")
-        part = MIMEBase('application', 'octet-stream')
-        part.set_payload((attachment).read())
-        encoders.encode_base64(part)
-        part.add_header('Content-Disposition', f"attachment; filename= {os.path.basename(file_path)}")
-        msg.attach(part)
-
-    # Attach template image if provided
-    if template_image_path:
-        image_attachment = open(template_image_path, "rb")
-        part = MIMEBase('application', 'octet-stream')
-        part.set_payload((image_attachment).read())
-        encoders.encode_base64(part)
-        part.add_header('Content-Disposition', f"attachment; filename= {os.path.basename(template_image_path)}")
-        msg.attach(part)
+    # # Attach files
+    # for file_path in attachment_paths:
+    #     attachment = open(file_path, "rb")
+    #     part = MIMEBase('application', 'octet-stream')
+    #     part.set_payload((attachment).read())
+    #     encoders.encode_base64(part)
+    #     part.add_header('Content-Disposition', f"attachment; filename= {os.path.basename(file_path)}")
+    #     msg.attach(part)
+    #
+    # # Attach template image if provided
+    # if template_image_path:
+    #     image_attachment = open(template_image_path, "rb")
+    #     part = MIMEBase('application', 'octet-stream')
+    #     part.set_payload((image_attachment).read())
+    #     encoders.encode_base64(part)
+    #     part.add_header('Content-Disposition', f"attachment; filename= {os.path.basename(template_image_path)}")
+    #     msg.attach(part)
 
     return msg
 
@@ -56,22 +56,21 @@ def save_draft(msg, smtp_server, smtp_port, login, password):
         print(f"Failed to save draft email: {str(e)}")
 
 
-
 # Main Function to runn things here
 if __name__ == '__main__':
 
     # Usage
     subject = "Your Subject"
     body = "This is a draft email."
-    to_email = "recipient@example.com"
-    from_email = "your-email@example.com"
+    to_email = "jyothiranuragvasuch@gmail.com"
+    from_email = "jyothiranurag@gmail.com"
     attachment_paths = ["path/to/file1.txt", "path/to/file2.pdf"]
     template_image_path = "path/to/template_image.png"
 
     msg = create_email(subject, body, to_email, from_email, attachment_paths, template_image_path)
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
-    login = "your-email@example.com"
-    password = "your-password"
+    login = from_email
+    password = "anudee1321"
 
     save_draft(msg, smtp_server, smtp_port, login, password)
